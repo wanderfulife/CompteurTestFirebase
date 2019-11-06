@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main.drawer.dart';
+import 'stopwatch.dart';
 
 void main() => runApp(MyApp());
 
@@ -170,7 +170,7 @@ class _MyHomePageState extends State {
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.grey[900],
+        backgroundColor: Colors.transparent,
         title: Text(
           'COMPTEUR',
           style: new TextStyle(
@@ -179,7 +179,6 @@ class _MyHomePageState extends State {
           ),
         ),
       ),
-      drawer: MainDrawer(),
       body: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -402,43 +401,18 @@ class _MyHomePageState extends State {
               ),
             ],
           ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.grey[900],
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.timer,
-              color: Colors.deepOrange,
-              size: data.size.height / 22,
-            ),
-            activeIcon: Icon(
-              Icons.timer,
-              size: data.size.height / 22,
-              color: Colors.deepOrange,
-            ),
-            title: Text(
-              'Chronomètre',
-              style: new TextStyle(
-                  color: Colors.white,
-                  fontSize: data.size.height / 35),
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.cloud_download,
-              color: Colors.deepOrange,
-              size: data.size.height / 22,
-            ),
-            title: Text(
-              'Sauvegarder',
-              style: new TextStyle(
-                  color: Colors.white, fontSize: data.size.height / 35),
-            ),
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => StopWatch()),
+              );
+            },
           ),
         ],
       ),
-    );
+
+    ) ;
+
   }
 }
