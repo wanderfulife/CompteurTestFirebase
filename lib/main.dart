@@ -25,6 +25,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State {
+
+
   // VOITURE
   int _voiturecounter = 0;
 
@@ -166,13 +168,17 @@ class _MyHomePageState extends State {
   Widget build(BuildContext context) {
     final data = MediaQuery.of(context);
 
+
+    int totalvehicules = _Motocounter + _voiturecounter + _Pieton1counter + _Pieton2counter + _PLcounter + _TCcounter
+    + _Velocounter + _vuLcounter;
+
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.transparent,
         title: Text(
-          'COMPTEUR',
+          '$totalvehicules',
           style: new TextStyle(
             fontSize: data.size.height / 18,
             color: Colors.white24,
@@ -402,10 +408,15 @@ class _MyHomePageState extends State {
             ],
           ),
           FloatingActionButton(
+            backgroundColor: Colors.grey[900],
+            child: Icon(Icons.access_alarm,
+            size: 40,
+              color: Colors.grey[700],
+            ),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => StopWatch()),
+                MaterialPageRoute(builder: (context) => SecondPage()),
               );
             },
           ),

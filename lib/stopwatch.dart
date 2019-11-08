@@ -1,43 +1,113 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 
-class StopWatch extends StatefulWidget {
+class SecondPage extends StatefulWidget {
   @override
-  _StopWatchState createState() => _StopWatchState();
+  _SecondPageState createState() => _SecondPageState();
+}
 
-  }
+class _SecondPageState extends State<SecondPage> {
+	@override
+	Widget build(
+			BuildContext context
+			) {
+		return Scaffold(
+			backgroundColor: Colors.grey[900],
+			appBar: AppBar(
+				backgroundColor: Colors.transparent,
+			),
+			body: chronometre(),
+		);
+	}
+
+	bool startispressed = true;
+	bool stopispressed = true;
+	bool resetispressed = true;
+	String stoptimetodisplay = "00:00:00";
+	var swatch = Stopwatch();
+	final dur = const Duration(seconds : 1);
+
+	
+	void starttimer(){
+		Timer(dur, keeprunning);
+	}
+
+	void keeprunning(){
+		if(swatch.isRunning){
+			starttimer();
+
+		}
+		setState(() {
+		  stoptimetodisplay = swatch.elapsed.inHours.toString().padLeft(2,"0") + ":"
+				  + (swatch.elapsed.inMinutes%60).toString().padLeft(2,"0")+ ":"
+				  + (swatch.elapsed.inSeconds%60).toString().padLeft(2,"0");
+		});
+	}
+
+	void startstopwatch() {
+		setState(() {
+			stopispressed = false;
+			startispressed = false;
+		});
+		swatch.start();
+		starttimer();
+	}
+
+	void stopstopwatch() {
+setState(() {
+  stopispressed = true;
+  resetispressed = false;
+});
+swatch.stop();
+	}
+
+	void resetstopwatch() {
+	setState(() {
+	  startispressed = true;
+	  resetispressed = true;
+	});
+	swatch.reset();
+	stoptimetodisplay = "00:00:00";
+
+	}
 
 
-Widget stopwatch() {
-	return Container(
-		child: Column(
+	Widget chronometre(
+			) {
+		return Column(
 			children: <Widget>[
 				Expanded(
-					flex: 2,
+					flex: 1,
 					child: Container(
 						alignment: Alignment.center,
 						child: Text(
-							"00:00:00",
+							stoptimetodisplay,
 							style: TextStyle(
-								fontSize: 50.0,
-								fontWeight: FontWeight.w700,
+									fontSize: 50.0,
+									fontWeight: FontWeight.w700,
+									color: Colors.white
 							),
 						),
 					),
 				),
 				Expanded(
-					flex: 2,
+					flex: 1,
 					child: Container(
+						color: Colors.grey[900],
 						child: Column(
+							mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 							children: <Widget>[
 								Row(
+									mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 									children: <Widget>[
 										RaisedButton(
-											onPressed: (){},
-											color: Colors.red,
+											onPressed: stopispressed ? null : stopstopwatch,
+											color: Colors.deepOrange[400],
 											padding: EdgeInsets.symmetric(
-												horizontal: 40.0,
-												vertical: 15.0,
+												horizontal: 50.0,
+												vertical: 20.0,
 											),
 											child: Text(
 												"Stop",
@@ -46,100 +116,45 @@ Widget stopwatch() {
 														color: Colors.white
 												),
 											),
-										)
-									],
-								)
-							],
-						),
-					),
-				),
-			],
-		),
-	);
-}
-
-
-
-class _StopWatchState extends State<StopWatch> {
-  @override
-  Widget build(BuildContext context) {
-	  // TODO: implement build
-	  return  Scaffold(
-		  backgroundColor: Colors.grey,
-		  appBar: AppBar(
-			  title: Text("TIMER",
-				  style: TextStyle(
-					  color: Colors.grey
-				  ),
-			  ),
-			  elevation: 15.0,
-			  backgroundColor: Colors.transparent,
-		  ),
-		  body: Center(
-				  child: Column(
-					  children: <Widget>[
-						  Text(""
-								  "The StopWatch",
-						  ),
-					  ],
-				  )
-		  ),
-	  );
-
-
-  }
-}
-
-
-
-Widget stopWatch() {
-	return Container(
-		child: Column(
-			children: <Widget>[
-				Expanded(
-					flex: 2,
-					child: Container(
-						alignment: Alignment.center,
-						child: Text(
-							"00:00:00",
-							style: TextStyle(
-								fontSize: 50.0,
-								fontWeight: FontWeight.w700,
-							),
-						),
-					),
-				),
-				Expanded(
-					flex: 2,
-					child: Container(
-						child: Column(
-							children: <Widget>[
-								Row(
-									children: <Widget>[
+										),
 										RaisedButton(
-											onPressed: (){},
-											color: Colors.red,
+											onPressed: resetispressed ? null : resetstopwatch,
+											color: Colors.blue[400],
 											padding: EdgeInsets.symmetric(
-												horizontal: 40.0,
-												vertical: 15.0,
+												horizontal: 50.0,
+												vertical: 20.0,
 											),
 											child: Text(
-												"Stop",
+												"Reset",
 												style: TextStyle(
 														fontSize: 20.0,
 														color: Colors.white
 												),
 											),
-										)
+										),
 									],
-								)
+								),
+								RaisedButton(
+									onPressed: startispressed ? startstopwatch : null,
+									color: Colors.greenAccent[400],
+									padding: EdgeInsets.symmetric(
+										horizontal: 60.0,
+										vertical: 25.0,
+									),
+									child: Text(
+										"Start",
+										style: TextStyle(
+												fontSize: 20.0,
+												color: Colors.white
+										),
+									),
+								),
 							],
 						),
 					),
 				),
 			],
-		),
-	);
-}
-
+		);
+	}
+ }
 
